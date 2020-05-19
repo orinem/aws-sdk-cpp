@@ -82,6 +82,7 @@ option(ENABLE_VIRTUAL_OPERATIONS "This option usually works with REGENERATE_CLIE
 
 set(BUILD_ONLY "" CACHE STRING "A semi-colon delimited list of the projects to build")
 set(CPP_STANDARD "11" CACHE STRING "Flag to upgrade the C++ standard used. The default is 11. The minimum is 11.")
+set(WINDOWS_WIN32_WINNT "0x0600" CACHE STRING "Windows _WIN32_WINNT target")
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -219,6 +220,7 @@ if (BUILD_DEPS)
             -DSTATIC_CRT=${STATIC_CRT}
             -DCMAKE_INSTALL_PREFIX=${AWS_DEPS_INSTALL_DIR}
             -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=${CMAKE_CURRENT_BINARY_DIR}/bin
+            -DWINDOWS_WIN32_WINNT=${WINDOWS_WIN32_WINNT}
             ${GEN_PLATFORM_ARG}
             ${CMAKE_CURRENT_SOURCE_DIR}/third-party
             WORKING_DIRECTORY ${AWS_DEPS_BUILD_DIR}

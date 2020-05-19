@@ -127,6 +127,10 @@ macro(set_msvc_flags)
             # pure size flags
             set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O1 /Ob0 /Os")
         endif()
+
+        if (DEFINED WINDOWS_WIN32_WINNT)
+            add_definitions("-D_WIN32_WINNT=${WINDOWS_WIN32_WINNT}")
+        endif()
     endif()
 endmacro()
 
