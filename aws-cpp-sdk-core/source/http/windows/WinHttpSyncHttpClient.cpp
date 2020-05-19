@@ -116,6 +116,7 @@ WinHttpSyncHttpClient::WinHttpSyncHttpClient(const ClientConfiguration& config) 
 
     // WinHTTP doesn't have the option to turn off keep-alive, so we will only set the value if keep-alive is turned on.
     // see https://docs.microsoft.com/en-us/windows/desktop/winhttp/option-flags for more information on default values.
+#ifdef WINHTTP_OPTION_WEB_SOCKET_KEEPALIVE_INTERVAL
     if (config.enableTcpKeepAlive)
     {
         DWORD keepAliveIntervalMs = config.tcpKeepAliveIntervalMs;
@@ -124,7 +125,7 @@ WinHttpSyncHttpClient::WinHttpSyncHttpClient(const ClientConfiguration& config) 
             AWS_LOGSTREAM_WARN(GetLogTag(), "Failed setting TCP keep-alive interval with error code: " << GetLastError());
         }
     }
-
+#endif
     AWS_LOGSTREAM_DEBUG(GetLogTag(), "API handle " << GetOpenHandle());
     SetConnectionPoolManager(Aws::New<WinHttpConnectionPoolMgr>(GetLogTag(),
         GetOpenHandle(), config.maxConnections, config.requestTimeoutMs, config.connectTimeoutMs, config.enableTcpKeepAlive, config.tcpKeepAliveIntervalMs));
